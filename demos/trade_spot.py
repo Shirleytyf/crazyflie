@@ -3,6 +3,7 @@
 """Demo script to take off 2 CFs before switching their position.
 
 Press 'O' in case of emergency
+
 """
 # pylint: disable=invalid-name
 
