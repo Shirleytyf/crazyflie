@@ -190,7 +190,7 @@ class TrajectoryPlanner(object):
         rospy.loginfo("Planner: Publishing trajectories...")
         time_step = 0
 
-        max_time_step = self.agents_dict[self.agents_dict.keys()[0]]['agent'].final_traj.shape[1]
+        max_time_step = self.agents_dict[list(self.agents_dict.keys())[0]]['agent'].final_traj.shape[1]
         while time_step < max_time_step:
             if rospy.is_shutdown():
                 break

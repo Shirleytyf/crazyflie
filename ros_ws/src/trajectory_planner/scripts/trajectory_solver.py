@@ -126,7 +126,7 @@ class TrajectorySolver(object):
         self.verbose = verbose
 
         if self.verbose:
-            print "Initializing solver..."
+            print ("Initializing solver...")
 
         # Time related attributes
         self.horizon_time = solver_args['horizon_time']
@@ -208,7 +208,7 @@ class TrajectorySolver(object):
         self.trajectory_plotter = TrajPlot(self.agents, self.step_interval, self.interp_time_step)
 
         if self.verbose:
-            print "Solver ready"
+            print ("Solver ready")
 
     # Setters methods
     def set_obstacles(self, obstacle_positions):
@@ -453,7 +453,7 @@ class TrajectorySolver(object):
             :obj:`float`: Total trajectory time
         """
         if self.verbose:
-            print "Solving trajectories..."
+            print ("Solving trajectories...")
 
         # For each time step
         while not self.at_goal and self.k_t < self.k_max and not self.in_collision:
@@ -484,9 +484,9 @@ class TrajectorySolver(object):
         self._interpolate_agents_traj()
 
         if not self.at_goal:
-            print "Solver failed with starting positions:"
-            print [agt.start_position for agt in self.agents]
-            print "at time step: %i" % self.k_t
+            print ("Solver failed with starting positions:")
+            print (agt.start_position for agt in self.agents)
+            print ("at time step: %i" % self.k_t)
 
         return self.at_goal, (self.k_t*self.step_interval)
 
@@ -532,16 +532,16 @@ class TrajectorySolver(object):
         coll_info.append(avoid_collision)
 
         if avoid_collision and IN_DEBUG:
-            print "\nTime %.2f at step %i: Agent %i" % (self.k_t*self.step_interval,\
-                self.k_t, agent.agent_idx)
+            print ("\nTime %.2f at step %i: Agent %i" % (self.k_t*self.step_interval,\
+                self.k_t, agent.agent_idx))
 
         # Build optimization problem: 1/2 x.T * p_mat * x + q_mat.T * x  s.t. g_mat*x <= h_mat
         try:
             p_mat, q_mat, g_mat, h_mat = self._build_optimization_matrices(agent, coll_info)
         except TypeError:
             if self.verbose:
-                print ''
-                print "ERROR: In collision"
+                print ('')
+                print ("ERROR: In collision")
             return None
 
         # Solve optimization problem
@@ -549,7 +549,7 @@ class TrajectorySolver(object):
                                                            p_mat, q_mat, g_mat, h_mat[:, 0])
 
         if IN_DEBUG and avoid_collision:
-            print "\t\t Relaxation: {}".format(relax_vals)
+            print ("\t\t Relaxation: {}").format(relax_vals)
 
         return accel_input
 
@@ -593,7 +593,7 @@ class TrajectorySolver(object):
 
                 # Relax until 2*min is reached
                 if cur_relaxation > self.relaxation_min_bound*2 and avoid_collision:
-                    print "No solution, relaxing constraints: %.2f" % cur_relaxation
+                    print ("No solution, relaxing constraints: %.2f" % cur_relaxation)
 
                     # Update constraint in h matrix
                     n_collision = len(agent.close_agents.keys())
@@ -606,7 +606,7 @@ class TrajectorySolver(object):
                     find_solution = False
 
                     if self.verbose:
-                        print "ERROR: No solution in constraints, Check max space"
+                        print ("ERROR: No solution in constraints, Check max space")
 
         return accel_input, relax_vals
 
@@ -720,14 +720,14 @@ class TrajectorySolver(object):
         initial_state = agent.states[0:6, -1].reshape(6, 1)
 
         if IN_DEBUG:
-            print "\t\t Close agents: {}".format(collisions_list)
-            print "\t\t At step of horizon:  %i" % coll_step
+            print ("\t\t Close agents: {}".format(collisions_list))
+            print ("\t\t At step of horizon:  %i" % coll_step)
 
         # Collision at step 0 mean two agents collided
         if coll_step == 0:
             if self.verbose:
-                print "Agent %i in collision" % agent.agent_idx
-                print "Min Distance: %.2f" % min([dist for _, dist in close_agents.items()])
+                print ("Agent %i in collision" % agent.agent_idx)
+                print ("Min Distance: %.2f" % min([dist for _, dist in close_agents.items()]))
             return None
 
         # Agent start_position at collision time step
@@ -771,7 +771,7 @@ class TrajectorySolver(object):
         agent_position_coll = self.all_agents_traj[collision_rows, agent.agent_idx]
 
         for agent_j_idx, dist in close_agents.items():
-            collision_idx = collisions_list.index(agent_j_idx)
+            collision_idx = list(collisions_list).index(agent_j_idx)
 
             # Other agent position at collision time step
             other_position_coll = self.all_agents_traj[collision_rows, agent_j_idx]
@@ -886,21 +886,21 @@ class TrajectorySolver(object):
         """
         if self.verbose:
             if self.at_goal:
-                print "Trajectory succesfull"
+                print ("Trajectory succesfull")
                 if self.agents_distances:
-                    print "Minimal distance between agents: %.2f" % min(self.agents_distances)
+                    print ("Minimal distance between agents: %.2f" % min(self.agents_distances))
 
                 for each_agent in self.agents:
-                    print "Final pos, agent", self.agents.index(each_agent), ": {}".format(
-                        each_agent.states[0:3, -1])
+                    print ("Final pos, agent", self.agents.index(each_agent), ": {}".format(
+                        each_agent.states[0:3, -1]))
 
-                print "Time to reach goal: %.2f" % (self.k_t*self.step_interval)
+                print ("Time to reach goal: %.2f" % (self.k_t*self.step_interval))
 
             elif self.in_collision:
-                print "Trajectory failed: Collision"
+                print ("Trajectory failed: Collision")
 
             else:
-                print "Trajectory failed: Max time reached"
+                print ("Trajectory failed: Max time reached")
 
     def plot_trajectories(self):
         """Plot all computed trajectories

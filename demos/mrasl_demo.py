@@ -27,27 +27,27 @@ if __name__ == "__main__":
 
     init_joystick()
 
-    print "MRASL demo"
+    print ("MRASL demo")
     swarm.set_mode("formation")
     swarm.set_formation("v")
 
     rospy.sleep(3)
-    print "Taking off"
-    print "Formation: v"
+    print ("Taking off")
+    print ("Formation: v")
     swarm.take_off()
     rospy.sleep(10)
 
-    print "Formation: Circle"
+    print ("Formation: Circle")
     swarm.set_formation("circle")
     rospy.sleep(10)
 
-    print "Turning"
+    print ("Turning")
     swarm.rotate_formation(180, 5)
     rospy.sleep(2)
 
-    print "Formation: Pyramid"
+    print ("Formation: Pyramid")
     swarm.set_formation("pyramid")
     rospy.sleep(10)
 
-    print "Landing to start positions"
+    print ("Landing to start positions")
     swarm.land()

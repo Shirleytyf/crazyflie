@@ -8,7 +8,7 @@ Module to move the swarm and use ``TrajectoryPlanner`` and ``FormationManager`` 
 """
 
 import ast
-import Queue
+import queue
 import rospy
 import numpy as np
 from numpy import dot
@@ -170,9 +170,9 @@ class SwarmController(object):
         # Initialize position history
         for cf_id in self._crazyflies:
             queue_dict = {}
-            queue_dict['x'] = Queue.Queue(n_data)
-            queue_dict['y'] = Queue.Queue(n_data)
-            queue_dict['z'] = Queue.Queue(n_data)
+            queue_dict['x'] = queue.Queue(n_data)
+            queue_dict['y'] = queue.Queue(n_data)
+            queue_dict['z'] = queue.Queue(n_data)
 
             positions[cf_id] = queue_dict
 

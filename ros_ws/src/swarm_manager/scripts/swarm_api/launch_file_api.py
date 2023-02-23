@@ -67,7 +67,7 @@ def launch_swarm(cf_list):
         cf_list (list of str): Name of all CF
     """
 
-    print "Launching swarm"
+    print ("Launching swarm")
     uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
     roslaunch.configure_logging(uuid)
 
@@ -94,7 +94,7 @@ def launch_joystick(joy_type, joy_dev):
     Args:
         joy_type (str): Joystick type
     """
-    print "Launching joystick controller"
+    print ("Launching joystick controller")
     uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
     roslaunch.configure_logging(uuid)
 

@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
     swarm.set_mode("automatic")
 
-    print "Taking off"
+    print ("Taking off")
     swarm.take_off()
 
     # Switch positions
@@ -40,5 +40,5 @@ if __name__ == "__main__":
 
     rospy.sleep(10)
 
-    print "Landing"
+    print ("Landing")
     swarm.land()

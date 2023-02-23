@@ -55,6 +55,12 @@ def handle_crazyflie_pose(msg, args):
                            rospy.Time.now(),
                            '/%s' % frame,
                            '/%s' % world)
+    pose_brd.sendTransform((msg.pose.position.x, msg.pose.position.y, msg.pose.position.z),
+                           (msg.pose.orientation.x, msg.pose.orientation.y,
+                            msg.pose.orientation.z, msg.pose.orientation.w),
+                           rospy.Time.now(),
+                           'cf%s/base_link' % frame[-1],
+                           '/%s' % world)
 
 
 if __name__ == '__main__':

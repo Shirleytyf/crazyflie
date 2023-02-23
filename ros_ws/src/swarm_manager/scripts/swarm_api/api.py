@@ -111,7 +111,7 @@ class SwarmAPI(object):
         self._joy_type = joy_type
 
         joy_dev = "/dev/input/" + joy_dev
-        print joy_dev
+        print (joy_dev)
 
         launch_joystick(joy_type, joy_dev)
 
@@ -169,7 +169,7 @@ class SwarmAPI(object):
             self._joy_buttons[button_name] = [func, args, kwargs]
 
     def _button_srv(self, srv_req):
-        print "Button pressed: %s" % srv_req.button
+        print ("Button pressed: %s" % srv_req.button)
 
         func = self._joy_buttons[srv_req.button][0]
         args = self._joy_buttons[srv_req.button][1]

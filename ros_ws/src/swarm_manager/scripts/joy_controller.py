@@ -44,10 +44,10 @@ class Controller(object):
         self._button_axes_mapping = joy_params["buttons_axes"]
 
         # Convert keys to int
-        for key in self._button_mapping.keys():
+        for key in list(self._button_mapping.keys()):
             self._button_mapping[int(key)] = self._button_mapping.pop(key)
 
-        for key in self._button_axes_mapping.keys():
+        for key in list(self._button_axes_mapping.keys()):
             self._button_axes_mapping[int(key)] = self._button_axes_mapping.pop(key)
 
         self.axes = Axes()

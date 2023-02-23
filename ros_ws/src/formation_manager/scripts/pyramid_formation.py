@@ -121,7 +121,7 @@ class PyramidFormation(FormationClass):
         self.n_tier = (self._n_agents - 1) / 4
         self._min_height = self._scale + 0.5 if self.n_tier > 0 else 0.5
 
-        print "MIN HEIGHT: %.2f" % self._min_height
+        print ("MIN HEIGHT: %.2f" % self._min_height)
 
         # Space between tiers
         self.tier_dist = self._scale/self.n_tier if self.n_tier > 0 else 0
